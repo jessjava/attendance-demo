@@ -55,9 +55,8 @@
         },
         computed: {
             menuList () {
-                let mlist = this.$store.state.app.menuList;
-                console.log("mlist",mlist)
-                return mlist;
+                return this.$store.state.app.menuList;
+                // return [];
             }
         },
         data(){

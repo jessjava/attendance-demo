@@ -60,11 +60,11 @@ export const appRouter = [
         component: Main,
         children: [
             {
-                path: 'attendance',
+                path: 'attend',
                 icon: 'ios-flag-outline',
-                name: 'attendance',
+                name: 'attend',
                 title: '考勤',
-                component: resolve => { require(['@/views/attendance/attendance.vue'], resolve); }
+                component: resolve => { require(['@/views/attendance/attend.vue'], resolve); }
             },
             {
                 path: 'statistics',
@@ -76,13 +76,13 @@ export const appRouter = [
         ]
     },
     {
-        path: '/page',
+        path: '/demo',
         icon: 'ios-flag-outline',
         title: '示例',
-        name: 'page',
+        name: 'demo',
         component: Main,
         children: [
-            { path: 'index', title: 'Page', name: 'page_index', component: resolve => { require(['@/views/demo.vue'], resolve); } }
+            { path: 'index', title: 'demo', name: 'demo_index', component: resolve => { require(['@/views/demo.vue'], resolve); } }
         ]
     }
 ];
