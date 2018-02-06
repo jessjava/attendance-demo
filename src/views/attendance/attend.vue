@@ -106,159 +106,103 @@
                         }
                     }
                 ],
-                attendanceData: [
-                    {
-                        id:1,
-                        name: '张三',
-                        stuno: 110,
-                        bzr: 'jess',
-                        ok: false,
-                        later: false,
-                        early: false,
-                        notcome: true
-                    },
-                    {
-                        id:2,
-                        name: '李四',
-                        stuno: 111,
-                        bzr: 'jess',
-                        ok: true,
-                        later: false,
-                        early: false,
-                        notcome: false
-                    },
-                    {
-                        id:3,
-                        name: '国际',
-                        stuno: 112,
-                        bzr: 'jess',
-                        ok: true,
-                        later: false,
-                        early: false,
-                        notcome: false
-                    },
-                    {
-                        id:4,
-                        name: '贺彪',
-                        stuno: 113,
-                        bzr: 'jess',
-                        ok: true,
-                        later: false,
-                        early: false,
-                        notcome: false
-                    },
-                    {
-                        id:5,
-                        name: '王晓东',
-                        stuno: 114,
-                        bzr: 'jess',
-                        ok: true,
-                        later: false,
-                        early: false,
-                        notcome: false
-                    }
-                ],
+                attendanceData: [],
                 weekLessonColumn: [
                     {
                         title: '周一',
-                        key: 'a',
+                        key: '0_cname',
                         render: (h, params) => {
-                            console.log(params)
                             return h('div', [
                                 h('a', {
                                     on: {
                                         click: () => {
-                                            this.selectLesson(params,params.row.a)
+                                            this.selectLesson(params)
                                         }
                                     }
-                                },params.row.a)
+                                },params.row['0_cname'])
                             ]);
                         }
                     },
                     {
                         title: '周二',
-                        key: 'b',
+                        key: '1_cname',
                         render: (h, params) => {
-                            console.log(params)
                             return h('div', [
-                                h('a', params.row.b)
+                                h('a',{
+                                    on: {
+                                        click: () => {
+                                            this.selectLesson(params)
+                                        }
+                                    }
+                                }, params.row['1_cname'])
                             ]);
                         }
                     },
                     {
                         title: '周三',
-                        key: 'c',
+                        key: '2_cname',
                         render: (h, params) => {
-                            // console.log(params.row.c)
                             return h('div', [
                                 h('a', {
                                     on: {
                                         click: () => {
-                                            this.selectLesson(params,params.row.c)
+                                            this.selectLesson(params)
                                         }
                                     }
-                                },params.row.c)
+                                },params.row['2_cname'])
                             ]);
                         }
                     },
                     {
                         title: '周四',
-                        key: 'd',
+                        key: '3_cname',
                         render: (h, params) => {
-                            console.log(params)
                             return h('div', [
-                                h('a', params.row.d)
+                                h('a',{
+                                    on: {
+                                        click: () => {
+                                            this.selectLesson(params)
+                                        }
+                                    }
+                                }, params.row["3_cname"])
                             ]);
                         }
                     },
                     {
                         title: '周五',
-                        key: 'e',
+                        key: '4_cname',
                         render: (h, params) => {
-                            console.log(params)
                             return h('div', [
-                                h('a', params.row.e)
+                                h('a', params.row['4_cname'])
                             ]);
                         }
                     },
                     {
                         title: '周六',
-                        key: 'f',
+                        key: '5_cname',
                         render: (h, params) => {
-                            console.log(params)
                             return h('div', [
-                                h('a', params.row.f)
+                                h('a', params.row['5_cname'])
                             ]);
                         }
                     },
                     {
                         title: '周日',
-                        key: 'g',
+                        key: '6_cname',
                         render: (h, params) => {
-                            console.log(params)
                             return h('div', [
-                                h('a', params.row.g)
+                                h('a', params.row['6_cname'])
                             ]);
                         }
                     }
                 ],
                 weekLessonData: [
-                    {
-                        name: 'John Brown',
-                        a: '数学',
-                        b: '数学',
-                        date: '2016-10-03'
-                    },
-                    {},{},
-                    {
-                        d: '体育锻炼',
-                        e: '数学'
-                    },
-                    {e: '数学'},
-                    {c: '数学'},
-                    {}
+                    {},
+                    {'1_cname': '数学', clazzId:"001", clazzName:"三年一班"},{},
+                    {'3_cname': '体育锻炼', clazzId:"002", clazzName:"三年二班"},{},{},{}
                 ],
-                currentAttendance:""
+                currentAttendance:"",
+                currentClazzId:""
             }
         },
         methods: {
@@ -295,14 +239,29 @@
             },
             commitAttendance(data){
                 console.log("commitData",data)
+                //做演示，直接把本课程所有数据提交到 store
+                this.$store.commit('updateAttendance',{
+                    clazzId:this.currentClazzId,
+                    data:this.attendanceData
+                });
             },
-            selectLesson(e,value){
-                console.log("clickLesson",e.column._index,e.row._index)
-                this.currentAttendance = `周${e.column._index+1}第${e.row._index+1}节${value}`
+            selectLesson(e){
+                // console.log("clickLesson",e,e.column._index,e.row._index)
+                let courseName = e.row[e.index+"_cname"];
+                let clazzId = e.row.clazzId;
+                let clazzName = e.row.clazzName;
+                this.currentClazzId = clazzId;
+                this.currentAttendance = `周${e.column._index+1}第${e.row._index+1}节 ${clazzName} ${courseName}`;
+                let allData = this.$store.state.attendance.studentAttendanceList;
+                this.attendanceData = JSON.parse(JSON.stringify(allData[clazzId]))
             },
             handleSelectAll (status) {
                 this.$refs.selection.selectAll(status);
-            }
+            },
+            init(){}
+        },
+        mounted(){
+            // this.init();
         }
     }
 </script>

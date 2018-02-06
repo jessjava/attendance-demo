@@ -3,7 +3,8 @@
 </style>
 <template>
     <div class="index">
-        <Button type="ghost" @click="handleStart">hello</Button>
+        Hello Welcome
+        <!-- <Button type="ghost" @click="handleStart">hello</Button> -->
     </div>
 </template>
 <script>

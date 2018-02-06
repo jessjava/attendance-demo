@@ -76,6 +76,16 @@ export const appRouter = [
         ]
     },
     {
+        path: '/leancloud',
+        icon: 'ios-flag-outline',
+        title: 'leancloud 存储示例',
+        name: 'leancloud',
+        component: Main,
+        children: [
+            { path: 'index', title: 'demo', name: 'leancloud_index', component: resolve => { require(['@/views/leancloud.vue'], resolve); } }
+        ]
+    },
+    {
         path: '/demo',
         icon: 'ios-flag-outline',
         title: '示例',

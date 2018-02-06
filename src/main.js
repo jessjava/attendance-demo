@@ -7,6 +7,10 @@ import 'iview/dist/styles/iview.css';
 
 Vue.use(iView);
 
+//云数据库
+import lean from './libs/leancloudstorage'
+Vue.prototype.$lean=lean
+
 new Vue({
     el: '#app',
     router: router,
